@@ -1,0 +1,13 @@
+.color{
+    background-color: rgb(21, 21, 161);
+    text-decoration: none;
+    color: white !important;
+};
+
+.vertical-line{
+    display: inline-block;
+    margin-top: 15px;
+    border-right: 1.5px snow;
+    
+};
+
