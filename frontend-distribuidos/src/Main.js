@@ -13,11 +13,11 @@ export class Main extends Component{
         minMag:[],
         maxMag:[],
         avgMag:[],
-        modeMag:[],
+        medMag:[],
         minProf:[],
         maxProf:[],
         avgProf:[],
-        modeProf:[]
+        medProf:[]
     }
 
     
@@ -31,8 +31,8 @@ export class Main extends Component{
         const res3 = await axios.get(this.baseUrl + "/getAvgMag") 
         this.setState({avgMag: res3.data})
 
-        const res4 = await axios.get(this.baseUrl + "/getAvgMag") 
-        this.setState({avgMag: res4.data})
+        const res4 = await axios.get(this.baseUrl + "/getMedMag") 
+        this.setState({medMag: res4.data})
 
 
         const res5 = await axios.get(this.baseUrl + "/getMinProf") 
@@ -44,8 +44,8 @@ export class Main extends Component{
         const res7 = await axios.get(this.baseUrl + "/getAvgProf") 
         this.setState({avgProf: res7.data})
 
-        const res8 = await axios.get(this.baseUrl + "/getAvgProf") 
-        this.setState({avgProf: res8.data})
+        const res8 = await axios.get(this.baseUrl + "/getMedProf") 
+        this.setState({medProf: res8.data})
         
     }
     
@@ -69,9 +69,7 @@ export class Main extends Component{
                 input.placeholder = data.avgMag
             }
             else{//mediana
-                input.placeholder ="Lugar: " + data.place +"\n" +
-                                    "Magnitud: " + data.mag + "\n" + 
-                                    "Profundidad: " + data.prof ;
+                input.placeholder = data.medMag
             }
         }
         else{
@@ -91,9 +89,7 @@ export class Main extends Component{
                 input.placeholder = data.avgProf
             }
             else{//mediana
-                input.placeholder ="Lugar: " + data.place +"\n" +
-                                    "Magnitud: " + data.mag + "\n" + 
-                                    "Profundidad: " + data.prof ;
+                input.placeholder = data.medProf
             }
         }
         
@@ -126,7 +122,7 @@ export class Main extends Component{
                 id="dropdown-button-dark-example2"
                 variant="secondary"
                 menuVariant="dark"
-                title="      Magnitud   info"
+                title="Magnitud   info"
                 className="mt-2"
             >
                 <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("res1",this.state,"res0",1,1)} >
