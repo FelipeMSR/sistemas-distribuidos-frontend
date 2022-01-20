@@ -1,28 +1,104 @@
 import { Component } from "react";
+import axios from 'axios';
 import {Dropdown, DropdownButton, Row,Col,Card, CardGroup} from "react-bootstrap";
-const Main = () =>{
 
 
-    const resultado = 6.231
-    const minimo = {
-        place:"44 km SSW of Kohīma, India",
-        mag: 4.1,
-        prof: 12
+
+export class Main extends Component{
+    
+
+    baseUrl = "http://localhost:1818/terremotos"
+
+    state = {
+        minMag:[],
+        maxMag:[],
+        avgMag:[],
+        modeMag:[],
+        minProf:[],
+        maxProf:[],
+        avgProf:[],
+        modeProf:[]
+    }
+
+    
+    async componentDidMount( ) {
+        const res = await axios.get(this.baseUrl + "/getMinMag") 
+        this.setState({minMag: res.data})
+
+        const res2 = await axios.get(this.baseUrl + "/getMaxMag") 
+        this.setState({maxMag: res2.data})
+
+        const res3 = await axios.get(this.baseUrl + "/getAvgMag") 
+        this.setState({avgMag: res3.data})
+
+        const res4 = await axios.get(this.baseUrl + "/getAvgMag") 
+        this.setState({avgMag: res4.data})
+
+
+        const res5 = await axios.get(this.baseUrl + "/getMinProf") 
+        this.setState({minProf: res5.data})
+
+        const res6 = await axios.get(this.baseUrl + "/getMaxProf") 
+        this.setState({maxProf: res6.data})
+
+        const res7 = await axios.get(this.baseUrl + "/getAvgProf") 
+        this.setState({avgProf: res7.data})
+
+        const res8 = await axios.get(this.baseUrl + "/getAvgProf") 
+        this.setState({avgProf: res8.data})
+        
     }
     
-    const escribir = (id,data,type) =>{
+    
+    escribir = (id,data,type,caso)=>{
         let input = document.getElementById(id)
-        if(type === 1){
-            input.placeholder = data;
+        if(caso === 1){
+            if(type === 1){//minimo
+                
+                input.placeholder = "Magnitud: " + data.minMag.mag+"\n" +
+                                    "Lugar: "+data.minMag.place + "\n" +           
+                                    "Profundidad: " + data.minMag.prof ;
+            }
+            else if(type === 2){//maximo
+                input.placeholder = "Magnitud: " + data.maxMag.mag+"\n" +
+                                    "Lugar: "+data.maxMag.place + "\n" +           
+                                    "Profundidad: " + data.maxMag.prof ;
+                
+            }
+            else if(type === 3){//media
+                input.placeholder = data.avgMag
+            }
+            else{//mediana
+                input.placeholder ="Lugar: " + data.place +"\n" +
+                                    "Magnitud: " + data.mag + "\n" + 
+                                    "Profundidad: " + data.prof ;
+            }
         }
         else{
-            input.placeholder ="Lugar: " + data.place +"\n" +
-                                "Magnitud: " + data.mag + "\n" + 
-                                "Profundidad: " + data.prof ;
+            if(type === 1){//minimo
+                
+                input.placeholder = "Magnitud: " + data.minProf.mag+"\n" +
+                                    "Lugar: "+data.minProf.place + "\n" +           
+                                    "Profundidad: " + data.minProf.prof ;
+            }
+            else if(type === 2){//maximo
+                input.placeholder = "Magnitud: " + data.maxProf.mag+"\n" +
+                                    "Lugar: "+data.maxProf.place + "\n" +           
+                                    "Profundidad: " + data.maxProf.prof ;
+                
+            }
+            else if(type === 3){//media
+                input.placeholder = data.avgProf
+            }
+            else{//mediana
+                input.placeholder ="Lugar: " + data.place +"\n" +
+                                    "Magnitud: " + data.mag + "\n" + 
+                                    "Profundidad: " + data.prof ;
+            }
         }
         
     }
-    const estadistico = (id,n) =>{
+    estadistico = (id,n) =>{
         let input = document.getElementById(id)
         if(n === 1){
             input.placeholder = "El mínimo es:"
@@ -37,11 +113,12 @@ const Main = () =>{
             input.placeholder = "La mediana es:"
         }
     }
-    const god = (id1,data,type, id2, n)=>{
-        escribir(id1,data,type);
-        estadistico(id2,n);
+    god = (id1,data, id2, n,caso)=>{
+        this.escribir(id1,data,n,caso);
+        this.estadistico(id2,n);
     }
 
+    render(){
         return(
         <CardGroup>
             <Card>
@@ -49,20 +126,20 @@ const Main = () =>{
                 id="dropdown-button-dark-example2"
                 variant="secondary"
                 menuVariant="dark"
-                title="Magnitud info"
+                title="      Magnitud   info"
                 className="mt-2"
             >
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("res1",minimo,2,"res0",1)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("res1",this.state,"res0",1,1)} >
                 Mínimo
                 </Dropdown.Item>
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("res1",minimo,2,"res0",2)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("res1",this.state,"res0",2,1)} >
                 Máximo
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("res1",resultado,1,"res0",3)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("res1",this.state,"res0",3,1)} >
                 Media
                 </Dropdown.Item>
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("res1",resultado,1,"res0",4)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("res1",this.state,"res0",4,1)} >
                 Mediana
                 </Dropdown.Item>
             </DropdownButton>
@@ -88,20 +165,20 @@ const Main = () =>{
                 id="dropdown-button-dark-example2"
                 variant="secondary"
                 menuVariant="dark"
-                title="Magnitud info"
+                title="Profundidad info"
                 className="mt-2"
             >
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("prof1",minimo,2,"prof0",1)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("prof1",this.state,"prof0",1,2)} >
                 Mínimo
                 </Dropdown.Item>
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("prof1",minimo,2,"prof0",2)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("prof1",this.state,"prof0",2,2)} >
                 Máximo
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("prof1",resultado,1,"prof0",3)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("prof1",this.state,"prof0",3,2)} >
                 Media
                 </Dropdown.Item>
-                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>god("prof1",resultado,1,"prof0",4)} >
+                <Dropdown.Item type="button" className = "btn btn-primary" onClick = { () =>this.god("prof1",this.state,"prof0",4,2)} >
                 Mediana
                 </Dropdown.Item>
             </DropdownButton>
@@ -122,5 +199,6 @@ const Main = () =>{
         </CardGroup>
         
     )
+    }
 }
 export default Main;
