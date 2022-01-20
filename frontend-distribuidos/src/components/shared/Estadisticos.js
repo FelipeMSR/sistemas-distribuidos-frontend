@@ -1,10 +1,10 @@
 import { Component } from "react";
 import axios from 'axios';
 import {Dropdown, DropdownButton, Row,Col,Card, CardGroup} from "react-bootstrap";
+import '../../assets/css/estadisticos.css'
 
 
-
-export class Main extends Component{
+export class Estadisticos extends Component{
     
 
     baseUrl = "http://localhost:1818/terremotos"
@@ -116,7 +116,7 @@ export class Main extends Component{
 
     render(){
         return(
-        <CardGroup>
+        <CardGroup className="margen">
             <Card>
             <DropdownButton 
                 id="dropdown-button-dark-example2"
@@ -197,4 +197,4 @@ export class Main extends Component{
     )
     }
 }
-export default Main;
+export default Estadisticos;

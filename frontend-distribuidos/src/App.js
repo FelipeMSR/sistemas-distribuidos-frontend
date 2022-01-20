@@ -1,7 +1,8 @@
 import React from 'react';
 import './assets/css/App.css'
 import Navbar from './components/shared/Navbar.js';
-import Main from './Main.js'
+import Terremotos from './components/shared/Terremotos.js';
+import Estadisticos from './components/shared/Estadisticos.js';
 
 function App() {
   return (
@@ -13,8 +14,12 @@ function App() {
       
       
       <div className="content-wrap">
-        <Main/>
+        <Estadisticos/>
       </div> 
+
+      <div>
+        <Terremotos/>
+      </div>
         
 
      
