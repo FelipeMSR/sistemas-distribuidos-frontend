@@ -4,7 +4,7 @@ import '../../assets/css/terremotos.css'
 
 
 export class Terremotos extends Component{
-    baseUrl = "http://localhost:1818/terremotos"
+    baseUrl = "http://20.151.65.39:1818/terremotos"
     state ={
         terremotos: []
     }
